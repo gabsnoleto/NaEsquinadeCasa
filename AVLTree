@@ -1,0 +1,98 @@
+public class AvlTree {
+
+    private AvlNode raiz;
+
+    public AvlTree() {
+        this.raiz = null;
+    }
+
+    public void inserir(Cliente cliente) {
+        raiz = inserir(raiz, cliente);
+    }
+
+    public Cliente buscar(String cpf) {
+        return buscar(raiz, cpf);
+    }
+
+    private AvlNode inserir(AvlNode no, Cliente cliente) {
+        if (no == null) {
+            return new AvlNode(cliente);
+        }
+
+        int comparacao = cliente.getCpf().compareTo(no.cliente.getCpf());
+
+        if (comparacao < 0) {
+            no.esquerda = inserir(no.esquerda, cliente);
+        } else if (comparacao > 0) {
+            no.direita = inserir(no.direita, cliente);
+        } else {
+            // O cliente já existe na árvore
+            return no;
+        }
+
+        // Atualizar o fator de balanceamento do nó
+        no.balanceamento = no.calcularBalanceamento();
+
+        // Rebalancear a árvore se necessário
+        if (no.balanceamento == -2) {
+            if (no.esquerda.balanceamento == 1) {
+                return rotacionarDireita(no);
+            } else {
+                return rotacionarEsquerdaDireita(no);
+            }
+        } else if (no.balanceamento == 2) {
+            if (no.direita.balanceamento == -1) {
+                return rotacionarEsquerda(no);
+            } else {
+                return rotacionarDireitaEsquerda(no);
+            }
+        }
+
+        return no;
+    }
+
+    private Cliente buscar(AvlNode no, String cpf) {
+        if (no == null) {
+            return null;
+        }
+
+        int comparacao = cpf.compareTo(no.cliente.getCpf());
+
+        if (comparacao == 0) {
+            return no.cliente;
+        } else if (comparacao < 0) {
+            return buscar(no.esquerda, cpf);
+        } else {
+            return buscar(no.direita, cpf);
+        }
+    }
+
+    private AvlNode rotacionarDireita(AvlNode no) {
+        AvlNode novaRaiz = no.esquerda;
+        no.esquerda = novaRaiz.direita;
+        novaRaiz.direita = no;
+
+        no.balanceamento = no.calcularBalanceamento();
+        novaRaiz.balanceamento = novaRaiz.calcularBalanceamento();
+
+        return novaRaiz;
+    }
+
+    private AvlNode rotacionarEsquerda(AvlNode no) {
+        AvlNode novaRaiz = no.direita;
+        no.direita = novaRaiz.esquerda;
+        novaRaiz.esquerda = no;
+
+        no.balanceamento = no.calcularBalanceamento();
+        novaRaiz.balanceamento = novaRaiz.calcularBalanceamento();
+
+        return novaRaiz;
+    }
+
+    private AvlNode rotacionarDireitaEsquerda(AvlNode no) {
+        no.esquerda = rotacionarEsquerda(no.esquerda);
+        return rotacionarDireita(no);
+    }
+
+    private AvlNode rotacionarEsquerdaDireita(AvlNode no) {
+        no.direita = rotacionarDireita(no.direita);
