@@ -1,0 +1,70 @@
+package cadastroClientes;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Scanner;
+
+public class CadastroClientes {
+
+    public static void main(String[] args) {
+        // Criar uma lista de clientes
+        ArrayList<Cliente> clientes = new ArrayList<>();
+
+        // Cadastrar um novo cliente
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Digite o nome completo do cliente:");
+        String nomeCompleto = scanner.nextLine();
+        System.out.println("Digite a data de nascimento do cliente (dd/mm/aaaa):");
+        String dataNascimento = scanner.nextLine();
+        System.out.println("Digite o contato telefônico do cliente:");
+        String contatoTelefone = scanner.nextLine();
+        System.out.println("Digite o e-mail do cliente:");
+        String email = scanner.nextLine();
+        System.out.println("Digite o endereço do cliente:");
+        String endereco = scanner.nextLine();
+        System.out.println("Digite o CPF do cliente:");
+        String cpf = scanner.nextLine();
+
+        Cliente cliente = new Cliente(nomeCompleto, dataNascimento, contatoTelefone, email, endereco, cpf);
+        clientes.add(cliente);
+
+        // Listar todos os clientes
+        System.out.println("Clientes cadastrados:");
+        for (Cliente c : clientes) {
+            System.out.println(c);
+        }
+    }
+}
+
+class Cliente {
+
+    private String nomeCompleto;
+    private Date dataNascimento;
+    private String contatoTelefone;
+    private String email;
+    private String endereco;
+    private String cpf;
+
+    public Cliente(String nomeCompleto, Date dataNascimento, String contatoTelefone, String email, String endereco, String cpf) {
+        this.nomeCompleto = nomeCompleto;
+        this.dataNascimento = dataNascimento;
+        this.contatoTelefone = contatoTelefone;
+        this.email = email;
+        this.endereco = endereco;
+        this.cpf = cpf;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "Nome completo: %s\n" +
+            "Data de nascimento: %s\n" +
+            "Contato telefônico: %s\n" +
+            "E-mail: %s\n" +
+            "Endereço: %s\n" +
+            "CPF: %s",
+            nomeCompleto,
+            dataNascimento,
+            contatoTelefone,
+            email,
+            endereco,
