@@ -1,0 +1,46 @@
+--Recursão
+
+public class CadastroClientes {
+
+    public static Cliente buscarClientePorCpf(ArrayList<Cliente> clientes, String cpf) {
+        if (clientes.isEmpty()) {
+            return null;
+        } else if (clientes.get(0).getCpf().equals(cpf)) {
+            return clientes.get(0);
+        } else {
+            return buscarClientePorCpf(clientes.subList(1, clientes.size()), cpf);
+        }
+    }
+}
+--Recursão
+
+
+--Laço
+public class CadastroClientes {
+
+    public static Cliente buscarClientePorCpf(ArrayList<Cliente> clientes, String cpf) {
+        int i = 0;
+        while (i < clientes.size()) {
+            if (clientes.get(i).getCpf().equals(cpf)) {
+                return clientes.get(i);
+            }
+            i++;
+        }
+        return null;
+    }
+}
+-- Laço
+
+--Metódos de busca
+ArrayList<Cliente> clientes = new ArrayList<>();
+clientes.add(new Cliente("João da Silva", new Date(), "123456789012", "joao.silva@email.com", "Rua das Flores, 123", "123.456.789-00"));
+clientes.add(new Cliente("Maria da Silva", new Date(), "987654321098", "maria.silva@email.com", "Rua dos Pinheiros, 456", "987.654.321-00"));
+
+// Busca por CPF
+Cliente cliente = buscarClientePorCpf(clientes, "123456789012");
+if (cliente != null) {
+    System.out.println("Cliente encontrado: " + cliente);
+} else {
+    System.out.println("Cliente não encontrado.");
+}
+--Metódos de busca
